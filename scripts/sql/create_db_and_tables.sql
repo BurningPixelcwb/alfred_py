@@ -1,65 +1,65 @@
-CREATE TABLE IF NOT EXISTS categoria(
-	id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome_categoria VARCHAR(100),
-    situacao VARCHAR(2),
+CREATE TABLE IF NOT EXISTS category(
+	id_category INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100),
+    situation VARCHAR(2),
     date_up TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_down TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
-CREATE TABLE IF NOT EXISTS subcategoria(
-	id_subcategoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome_subcategoria VARCHAR(100),
-    fk_id_categoria INT,
-    FOREIGN KEY (fk_id_categoria) REFERENCES categoria(id_categoria),
+CREATE TABLE IF NOT EXISTS subcategory(
+	id_subcategory INT AUTO_INCREMENT PRIMARY KEY,
+    subcategory_name VARCHAR(100),
+    fk_id_category INT,
+    FOREIGN KEY (fk_id_category) REFERENCES category(id_category),
 	date_up TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_down TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS conta(
-	id_conta INT AUTO_INCREMENT PRIMARY KEY,
-    nome_conta VARCHAR(255),
-    situacao VARCHAR(2),
+CREATE TABLE IF NOT EXISTS account(
+	id_account INT AUTO_INCREMENT PRIMARY KEY,
+    account_name VARCHAR(255),
+    situation VARCHAR(2),
 	date_up TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_down TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS tipo_transacao(
-	id_tp_transacao INT AUTO_INCREMENT PRIMARY KEY,
-    nome_tp_transacao VARCHAR(255),
-    situacao VARCHAR(2),
+CREATE TABLE IF NOT EXISTS transaction_type(
+	id_transaction_type INT AUTO_INCREMENT PRIMARY KEY,
+    transaction_type_name VARCHAR(255),
+    situation VARCHAR(2),
 	date_up TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_down TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS transacao(
-	  id_transacao INT AUTO_INCREMENT PRIMARY KEY
+CREATE TABLE IF NOT EXISTS transaction(
+	  id_transaction INT AUTO_INCREMENT PRIMARY KEY
     , url_nfe LONGTEXT
-    , estabelecimento VARCHAR(255)
-    , endereco_compra longtext
+    , establishment VARCHAR(255)
+    , buy_address longtext
     , dt_ticket datetime(6)
-    , dt_lancamento datetime(6)
-    , situacao VARCHAR(2)
-    , fk_id_conta int(11)
-    , fk_id_sub_categoria int(11)
-    , fk_id_tp_transacao int(11)
-    /*, FOREIGN KEY (fk_id_conta) REFERENCES conta(id_conta)
-    , FOREIGN KEY (fk_id_sub_categoria) REFERENCES subcategoria(id_subcategoria)
-    , FOREIGN KEY (fk_id_tp_transacao) REFERENCES tipo_transacao(id_tp_transacao)*/
+    , dt_launch datetime(6)
+    , situation VARCHAR(2)
+    , fk_id_account int(11)
+    , fk_id_subcategory int(11)
+    , fk_id_transaction_type int(11)
+    /*, FOREIGN KEY (fk_id_account) REFERENCES account(id_account)
+    , FOREIGN KEY (fk_id_subcategory) REFERENCES subcategory(id_subcategory)
+    , FOREIGN KEY (fk_id_transaction_type) REFERENCES transaction_type(id_transaction_type)*/
 	, date_up TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     , date_down TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS ticket(
 	  id_ticket INT AUTO_INCREMENT PRIMARY KEY
-	, cod_prod int(11)
-    , item_comprado varchar(155)
-    , quantidade decimal(5,2)
-    , medida varchar(15)
-    , preco decimal(15,2)
-    , valor_total decimal(15,2)
-    , fk_id_transacao int(11)
-    , FOREIGN KEY (fk_id_transacao) REFERENCES transacao(id_transacao)
+	, cod_product int(11)
+    , purchased_item varchar(155)
+    , quantity decimal(5,2)
+    , measure varchar(15)
+    , price decimal(15,2)
+    , total_value decimal(15,2)
+    , fk_id_transaction int(11)
+    , FOREIGN KEY (fk_id_transaction) REFERENCES transaction(id_transaction)
 	, date_up TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     , date_down TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

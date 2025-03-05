@@ -21,7 +21,7 @@ LEFT JOIN
     
 LEFT JOIN
 	subcategory AS su
-    ON su.id_subcategory = tr.fk_id_sub_category
+    ON su.id_subcategory = tr.fk_id_subcategory
     
 WHERE
 	tr.fk_id_transaction_type = 1

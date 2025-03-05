@@ -10,12 +10,12 @@ nav = libs.webdriver.Chrome(service=libs.service)
 
 ##Pandas
 ##Series para lista de compra
-df_cod_prod = libs.pd.Series([])
-df_item_comprado = libs.pd.Series([])
-df_quantidade = libs.pd.Series([])
-df_medida = libs.pd.Series([])
-df_preco = libs.pd.Series([])
-df_valor_total = libs.pd.Series([])
+df_cod_product = libs.pd.Series([])
+df_purchased_item = libs.pd.Series([])
+df_quantity = libs.pd.Series([])
+df_measure = libs.pd.Series([])
+df_price = libs.pd.Series([])
+df_total_value = libs.pd.Series([])
 
 #Series para: Local da compra
 df_local_compra = libs.pd.Series([])
@@ -24,7 +24,7 @@ df_local_compra = libs.pd.Series([])
 
 #Series para: Info Gerais
 
-transacao = libs.pd.DataFrame()
+transaction = libs.pd.DataFrame()
 
 ticket = libs.pd.DataFrame()
 
@@ -50,107 +50,107 @@ data_ticket = data_ticket.split('/')
 data_ticket = data_ticket[2] + '-' + data_ticket[1] + '-' + data_ticket[0] + ' ' + hora_ticket
 
 
-#resolvendo estabelecimento
-arr_estabelecimento = nav.find_elements(libs.By.XPATH, '//*[@id="u20"]')
+#resolvendo establishment
+arr_establishment = nav.find_elements(libs.By.XPATH, '//*[@id="u20"]')
 
-arr_elements = len(arr_estabelecimento)
+arr_elements = len(arr_establishment)
 
 for i in range(arr_elements):
-    estabelecimento = arr_estabelecimento[i].text
+    establishment = arr_establishment[i].text
 
 #definindo data do lançamento do ticket
-dt_lancamento = libs.datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+dt_launch = libs.datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 
 #resolvendo local da compra
 local_compra = nav.find_elements(libs.By.XPATH, '//div[@class="txtTopo"]')
-endereco_compra = nav.find_elements(libs.By.XPATH, '//div[@class="text"]')
-arr_elements = len(endereco_compra)
+buy_address = nav.find_elements(libs.By.XPATH, '//div[@class="text"]')
+arr_elements = len(buy_address)
 
 for i in range(arr_elements):
-    endereco = endereco_compra[i].text
+    endereco = buy_address[i].text
 
 #recuperando informações da compra
-item_comprado = nav.find_elements(libs.By.XPATH, '//span[@class="txtTit2"]')
+purchased_item = nav.find_elements(libs.By.XPATH, '//span[@class="txtTit2"]')
 
-cod_produto = nav.find_elements(libs.By.XPATH, '//span[@class="RCod"]')
+cod_productuto = nav.find_elements(libs.By.XPATH, '//span[@class="RCod"]')
 
-quantidade = nav.find_elements(libs.By.XPATH, '//span[@class="Rqtd"]')
+quantity = nav.find_elements(libs.By.XPATH, '//span[@class="Rqtd"]')
 
-medida = nav.find_elements(libs.By.XPATH, '//span[@class="RUN"]')
+measure = nav.find_elements(libs.By.XPATH, '//span[@class="RUN"]')
 
-preco = nav.find_elements(libs.By.XPATH, '//span[@class="RvlUnit"]')
+price = nav.find_elements(libs.By.XPATH, '//span[@class="RvlUnit"]')
 
-valor_total = nav.find_elements(libs.By.XPATH, '//span[@class="valor"]')
+total_value = nav.find_elements(libs.By.XPATH, '//span[@class="valor"]')
 
-compras = len(item_comprado)
+compras = len(purchased_item)
 
 for i in range(compras):
-    #print(cod_produto[i].text + " : " + item_comprado[i].text + " : " +  quantidade[i].text + " : " +  medida[i].text + " : " + qntXmedida[i].text + " : " + valor_total[i].text)
+    #print(cod_productuto[i].text + " : " + purchased_item[i].text + " : " +  quantity[i].text + " : " +  measure[i].text + " : " + qntXmeasure[i].text + " : " + total_value[i].text)
     
-    df_cod_prod[i] = cod_produto[i].text
+    df_cod_product[i] = cod_productuto[i].text
     
-    df_item_comprado[i] = item_comprado[i].text
+    df_purchased_item[i] = purchased_item[i].text
 
-    df_quantidade[i] = quantidade[i].text
+    df_quantity[i] = quantity[i].text
 
-    df_medida[i] = medida[i].text
+    df_measure[i] = measure[i].text
 
-    df_preco[i] = preco[i].text
+    df_price[i] = price[i].text
 
-    df_valor_total[i] = valor_total[i].text
+    df_total_value[i] = total_value[i].text
 
 nav.close()
 
 #Cria um data frame
 ticket_lancamento = {
-    'fk_id_conta': classification.escolha_id_conta
-    , 'fk_id_tp_transacao': classification.escolha_id_tipo_transacao
-    , 'fk_id_sub_categoria': [classification.escolha_id_sub_categoria]
+    'fk_id_account': classification.escolha_id_account
+    , 'fk_id_transaction_type': classification.escolha_id_transaction_type
+    , 'fk_id_subcategory': [classification.escolha_id_sub_category]
     , 'url_nfe': url_nfe
-    , 'estabelecimento': estabelecimento
-    , 'endereco_compra': endereco
+    , 'establishment': establishment
+    , 'buy_address': endereco
     , 'dt_ticket': data_ticket
-    , 'dt_lancamento': dt_lancamento
+    , 'dt_launch': dt_launch
 }
-df_transacao = libs.pd.DataFrame(data=ticket_lancamento)
+df_transaction = libs.pd.DataFrame(data=ticket_lancamento)
 
 ##insere lancamento
-functions.queries.insert_trancao(df_transacao)
+functions.queries.insert_trancao(df_transaction)
 
-##Resgata as contas registradas em BD
-url_cara = functions.queries.get_last_transacao()
-fk_id_transacao = url_cara.at[0,'id_transacao']
+##Resgata as accounts registradas em BD
+url_cara = functions.queries.get_last_transaction()
+fk_id_transaction = url_cara.at[0,'id_transaction']
 
 #criando DataFrame de ticket
-ticket.insert(0, "cod_prod", df_cod_prod)
-ticket.insert(1, "item_comprado", df_item_comprado)
-ticket.insert(2, "quantidade", df_quantidade)
-ticket.insert(3, "medida", df_medida)
-ticket.insert(4, "preco", df_preco)
-ticket.insert(5, "valor_total", df_valor_total)
-ticket.insert(6, "fk_id_transacao", fk_id_transacao)
+ticket.insert(0, "cod_product", df_cod_product)
+ticket.insert(1, "purchased_item", df_purchased_item)
+ticket.insert(2, "quantity", df_quantity)
+ticket.insert(3, "measure", df_measure)
+ticket.insert(4, "price", df_price)
+ticket.insert(5, "total_value", df_total_value)
+ticket.insert(6, "fk_id_transaction", fk_id_transaction)
 
-#Limpando coluna: cod_prod
-ticket['cod_prod'] = ticket['cod_prod'].str.replace('Código: ', '')
-ticket['cod_prod'] = ticket['cod_prod'].str.replace('(', '')
-ticket['cod_prod'] = ticket['cod_prod'].str.replace(')', '')
-
-
-#Limpando coluna: quantidade
-ticket['quantidade'] = ticket['quantidade'].str.replace('Qtde.:', '')
-ticket['quantidade'] = ticket['quantidade'].str.replace(',', '.')
+#Limpando coluna: cod_product
+ticket['cod_product'] = ticket['cod_product'].str.replace('Código: ', '')
+ticket['cod_product'] = ticket['cod_product'].str.replace('(', '')
+ticket['cod_product'] = ticket['cod_product'].str.replace(')', '')
 
 
-#Limpando coluna: medida
-ticket['medida'] = ticket['medida'].str.replace('UN: ', '')
+#Limpando coluna: quantity
+ticket['quantity'] = ticket['quantity'].str.replace('Qtde.:', '')
+ticket['quantity'] = ticket['quantity'].str.replace(',', '.')
 
 
-#Limpando coluna: preco
-ticket['preco'] = ticket['preco'].str.replace('Vl. Unit.: ', '')
-ticket['preco'] = ticket['preco'].str.replace(',', '.')
+#Limpando coluna: measure
+ticket['measure'] = ticket['measure'].str.replace('UN: ', '')
 
 
-#Limpando coluna: valor_total
-ticket['valor_total'] = ticket['valor_total'].str.replace(',', '.')
+#Limpando coluna: price
+ticket['price'] = ticket['price'].str.replace('Vl. Unit.: ', '')
+ticket['price'] = ticket['price'].str.replace(',', '.')
+
+
+#Limpando coluna: total_value
+ticket['total_value'] = ticket['total_value'].str.replace(',', '.')
 
 functions.queries.set_ticket(ticket)

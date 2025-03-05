@@ -6,29 +6,29 @@ import functions.queries
 print('\n######## Digite o valor gasto ########\n')
 valor_manual = input()
 
-dt_lancamento = libs.datetime.now()
+dt_launch = libs.datetime.now()
 
 #Cria um data frame
 ticket_lancamento = {
-    'fk_id_conta': classification.escolha_id_conta
-    , 'fk_id_tp_transacao': classification.escolha_id_tipo_transacao
-    , 'fk_id_sub_categoria': [classification.escolha_id_sub_categoria]
+    'fk_id_account': classification.escolha_id_account
+    , 'fk_id_transaction_type': classification.escolha_id_transaction_type
+    , 'fk_id_subcategory': [classification.escolha_id_sub_category]
     , 'url_nfe': ''
-    , 'estabelecimento': ''
-    , 'endereco_compra': ''
+    , 'establishment': ''
+    , 'buy_address': ''
     , 'dt_ticket': ''
-    , 'dt_lancamento': dt_lancamento
+    , 'dt_launch': dt_launch
 }
-df_transacao = libs.pd.DataFrame(data=ticket_lancamento)
+df_transaction = libs.pd.DataFrame(data=ticket_lancamento)
 
 ##insere lancamento
-functions.queries.insert_trancao(df_transacao)
+functions.queries.insert_trancao(df_transaction)
 
-##Resgata as contas registradas em BD
-url_cara = functions.queries.get_last_transacao()
-fk_id_transacao = url_cara.at[0,'id_transacao']
+##Resgata as accounts registradas em BD
+url_cara = functions.queries.get_last_transaction()
+fk_id_transaction = url_cara.at[0,'id_transaction']
 
-ticket = libs.pd.DataFrame({'valor_total':[valor_manual], "fk_id_transacao":[fk_id_transacao]})
-ticket['valor_total'] = ticket['valor_total'].str.replace(',', '.')
+ticket = libs.pd.DataFrame({'total_value':[valor_manual], "fk_id_transaction":[fk_id_transaction]})
+ticket['total_value'] = ticket['total_value'].str.replace(',', '.')
 
 functions.queries.set_ticket(ticket)

@@ -1,5 +1,5 @@
- -- Realiza inserçõe na tabela CATEGORIA
-INSERT INTO categoria (id_categoria, nome_categoria, situacao) VALUES
+ -- Realiza inserçõe na tabela category
+INSERT INTO category (id_category, category_name, situation) VALUES
 	  (1, 'Moradia', 'A')
 	, (2, 'Amor', 'A')
 	, (3, 'Diferentao', 'A')
@@ -7,17 +7,17 @@ INSERT INTO categoria (id_categoria, nome_categoria, situacao) VALUES
 	, (5, 'Relacionamento', 'A')
 	, (6, 'Saude', 'A');
 
- -- Realiza inserçõe na tabela CONTA
-INSERT INTO conta (id_conta, nome_conta, situacao) VALUES
-(1, 'Bradesco Conta Corrente', 'A'),
-(2, 'Itau Conta Corrente', 'A'),
+ -- Realiza inserçõe na tabela account
+INSERT INTO account (id_account, account_name, situation) VALUES
+(1, 'Bradesco account Corrente', 'A'),
+(2, 'Itau account Corrente', 'A'),
 (3, 'Carteira', 'A'),
 (4, 'Cofrinho', 'A'),
 (5, 'VA - Vale Alimentacao', 'A'),
 (6, 'VR - Vale Refeicao', 'A'),
 (7, 'Auxílio Home Office', 'A');
--- Realiza inserçõe na tabela SUBCATEGORIA
-INSERT INTO subcategoria (id_subcategoria, nome_subcategoria, fk_id_categoria) VALUES
+-- Realiza inserçõe na tabela SUBcategory
+INSERT INTO subcategory (id_subcategory, subcategory_name, fk_id_category) VALUES
 (1, 'Alimentacao', 2),
 (2, 'Cinema', 2),
 (3, 'Agua', 1),
@@ -37,8 +37,8 @@ INSERT INTO subcategoria (id_subcategoria, nome_subcategoria, fk_id_categoria) V
 (17, 'Equipamento', 6),
 (18, 'Salario', 4);
 
--- Realiza inserçõe na tabela TIPO TRANSACAO
-INSERT INTO tipo_transacao (id_tp_transacao, nome_tp_transacao) VALUES
+-- Realiza inserçõe na tabela TIPO transaction
+INSERT INTO transaction_type (id_transaction_type, transaction_type_name) VALUES
 (1, 'Despesa'),
 (2, 'Receita'),
 (3, 'Transferencia');

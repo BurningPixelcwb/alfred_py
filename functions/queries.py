@@ -2,37 +2,37 @@ import libs
 db_connection_str = 'mysql+pymysql://root:@localhost:3306/alfred_db'
 db_connection = libs.create_engine(db_connection_str)
 
-def get_contas():
-    query = "SELECT id_conta, nome_conta FROM conta WHERE situacao = 'A';"
-    df_contas = libs.pd.read_sql(query, con=db_connection)
+def get_accounts():
+    query = "SELECT id_account, account_name FROM account WHERE situation = 'A';"
+    df_accounts = libs.pd.read_sql(query, con=db_connection)
 
-    return df_contas#.to_string(index=False)
+    return df_accounts#.to_string(index=False)
 
-def get_tipo_transacao():
-    query = "SELECT id_tp_transacao, nome_tp_transacao FROM tipo_transacao;"
-    df_tipo_transacao = libs.pd.read_sql(query, con=db_connection)
+def get_transaction_type():
+    query = "SELECT id_transaction_type, transaction_type_name FROM transaction_type;"
+    df_transaction_type = libs.pd.read_sql(query, con=db_connection)
 
-    return df_tipo_transacao
+    return df_transaction_type
 
-def get_categoria():
-    query = "SELECT id_categoria, nome_categoria FROM categoria;"
-    df_categoria = libs.pd.read_sql(query, con=db_connection)
+def get_category():
+    query = "SELECT id_category, category_name FROM category;"
+    df_category = libs.pd.read_sql(query, con=db_connection)
 
-    return df_categoria
+    return df_category
 
-def get_subcategoria(categoria):
-    query = "SELECT id_subcategoria, nome_subcategoria FROM `subcategoria` WHERE fk_id_categoria = " + str(categoria) + ";"
-    df_sub_categoria = libs.pd.read_sql(query, con=db_connection)
+def get_subcategory(category):
+    query = "SELECT id_subcategory, subcategory_name FROM `subcategory` WHERE fk_id_category = " + str(category) + ";"
+    df_sub_category = libs.pd.read_sql(query, con=db_connection)
 
-    return df_sub_categoria
+    return df_sub_category
 
-def insert_trancao(df_transacao):
-    df_transacao.to_sql('transacao', db_connection, if_exists='append', index = False)
+def insert_trancao(df_transaction):
+    df_transaction.to_sql('transaction', db_connection, if_exists='append', index = False)
 
     return True
 
-def get_last_transacao():
-    query = "SELECT * FROM transacao ORDER BY id_transacao DESC LIMIT 1;"
+def get_last_transaction():
+    query = "SELECT * FROM transaction ORDER BY id_transaction DESC LIMIT 1;"
     url_cara = libs.pd.read_sql(query, con=db_connection)
 
     return url_cara
