@@ -4,7 +4,7 @@ import functions.queries
 ##Lançamento manual ou nao?
 print('\n######## Seu lançamento será manual ou com link NFE? ########\n')
 print('######## Digite M para MANUAL e N para nota fiscal eletrônica ########\n')
-tp_lancamento = input()
+type_launch = input()
 
 ##Nota PR ou SC?
 print('\n######## A NFE é PR ou SC? ########\n')

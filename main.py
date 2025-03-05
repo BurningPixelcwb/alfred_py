@@ -4,10 +4,10 @@ from ctypes import get_last_error
 import classification
 
 #decide pra onde vai depois de classificada a transação
-if classification.tp_lancamento == 'm':
+if classification.type_launch == 'm':
     import manual
 
-if classification.tp_lancamento == 'n':
+if classification.type_launch == 'n':
     if classification.estado_lancamento == '1':
         import nfe
     else:
